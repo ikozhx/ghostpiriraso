@@ -1,1 +1,96 @@
-<h1>Github page test</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Gótica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Video de Fondo -->
+    <video autoplay muted loop id="bg-video">
+        <!-- CAMBIA ESTA RUTA por la de tu video. Asegúrate de que esté en la misma carpeta o pon la URL completa. -->
+        <source src="fondogot.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+
+    <!-- Contenido de bienvenida centrado -->
+    <div class="container">
+        <img src="murcielagos3.png" alt="Murciélago decorativo" class="bat bat-left">
+        <h1>Bienvenidxs a mi Blog...</h1>
+        <p>o lo que sea que sea esto jeje</p>
+        <img src="murcielagos3.png" alt="Murciélago decorativo" class="bat bat-right">
+    </div>
+
+    <div class="main-layout">
+        <!-- Columna Izquierda: Galería Interactiva -->
+        <div class="interactive-gallery">
+            <div class="main-image-display"></div>
+            <div class="thumbnail-strip">
+                <button id="scroll-left" class="arrow">&lt;</button>
+                <div class="thumbnails" id="thumbnails-container">
+                    <!-- Las miniaturas se generan con JavaScript -->
+                </div>
+                <button id="scroll-right" class="arrow">&gt;</button>
+            </div>
+            <div class="description-box">
+                <h2 id="image-title"></h2>
+                <p id="image-description"></p>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Blog de Estados -->
+        <div class="blog-column">
+            <!-- El formulario para postear, solo visible para el admin -->
+            <div class="status-poster-container admin-only">
+                <div class="status-poster-header">
+                    <h2>Mi Diario</h2>
+                    <button id="logout-button" class="admin-only">Salir</button>
+                </div>
+                <form id="status-form" class="admin-only">
+                    <textarea id="status-text" placeholder="¿Qué estás pensando?"></textarea>
+                    <img id="post-preview-image" src="#" alt="Vista previa de la imagen">
+                    <div class="form-controls">
+                        <div class="file-input-wrapper">
+                            <label for="image-upload">Subir Imagen</label>
+                            <input type="file" id="image-upload" accept="image/*">
+                        </div>
+                        <div class="color-picker-wrapper">
+                            <label for="font-color">Texto</label>
+                            <input type="color" id="font-color" value="#e0e0e0">
+                        </div>
+                        <div class="color-picker-wrapper">
+                            <label for="bg-color">Fondo</label>
+                            <input type="color" id="bg-color" value="#212121">
+                        </div>
+                    </div>
+                    <button type="submit" id="post-button">Publicar</button>
+                </form>
+            </div>
+            <!-- El feed de posts, siempre visible -->
+            <div id="posts-feed"></div>
+        </div>
+    </div>
+
+    <!-- Disparador de Login Secreto -->
+    <div id="login-trigger">§</div>
+
+    <!-- Modal de Login -->
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal-btn">&times;</span>
+            <h2>Acceso de Administrador</h2>
+            <form id="login-form">
+                <input type="text" id="username-input" placeholder="Usuario" required>
+                <input type="password" id="password-input" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
