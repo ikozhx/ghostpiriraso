@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Página cargada. Iniciando script...");
+
     // --- Lógica de la Galería Interactiva ---
+    console.log("Configurando galería...");
     const galleryData = [
         {
             id: 1,
@@ -75,8 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     scrollLeftBtn.addEventListener('click', () => thumbnailsContainer.scrollBy({ left: -150, behavior: 'smooth' }));
     scrollRightBtn.addEventListener('click', () => thumbnailsContainer.scrollBy({ left: 150, behavior: 'smooth' }));
+    console.log("Galería configurada correctamente.");
 
     // --- Lógica para el Blog de Estados ---
+    console.log("Configurando blog...");
     const statusForm = document.getElementById('status-form');
     const statusText = document.getElementById('status-text');
     const imageUpload = document.getElementById('image-upload');
@@ -93,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password-input');
 
     const ADMIN_CREDENTIALS = {
-        username: 'ale',
+        username: 'tu_usuario',
         password: 'hola123'
     };
     let isAdmin = sessionStorage.getItem('myGothicAdmin') === 'true';
@@ -101,9 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function getFromStorage(key, defaultValue) {
         try {
             const item = localStorage.getItem(key);
+            console.log(`Leyendo '${key}' de localStorage.`);
             return item ? JSON.parse(item) : defaultValue;
         } catch (e) {
-            console.error(`Error parsing ${key} from localStorage. Resetting.`, e);
+            console.error(`Error al leer '${key}' de localStorage. Se usarán valores por defecto.`, e);
             localStorage.removeItem(key);
             return defaultValue;
         }
@@ -112,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let posts = getFromStorage('myGothicPosts', []);
     let userInteractions = getFromStorage('myGothicUserInteractions', {});
 
+    // Migración de datos para asegurar que los posts viejos tengan los nuevos campos
     posts.forEach(post => {
         if (post && typeof post === 'object') {
             post.likes = post.likes || 0;
@@ -120,14 +127,20 @@ document.addEventListener('DOMContentLoaded', () => {
             post.comments = Array.isArray(post.comments) ? post.comments : [];
         }
     });
+    console.log("Datos de posts cargados y migrados.");
 
     const savePosts = () => {
         localStorage.setItem('myGothicPosts', JSON.stringify(posts));
         localStorage.setItem('myGothicUserInteractions', JSON.stringify(userInteractions));
+        console.log("Datos guardados en localStorage.");
     };
 
     const renderPosts = () => {
+        console.log("Iniciando renderizado de posts...");
         postsFeed.innerHTML = '';
+        if (posts.length === 0) {
+            console.log("No hay posts para mostrar.");
+        }
         posts.forEach(post => {
             if (!post) return;
             const postCard = document.createElement('div');
@@ -170,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             postCard.innerHTML = postHTML;
             postsFeed.appendChild(postCard);
         });
+        console.log("Renderizado de posts finalizado.");
     };
 
     const enableAdminMode = () => {
@@ -298,8 +312,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return p.innerHTML;
     }
 
+    console.log("Configuración de eventos finalizada.");
+
+    // --- Flujo de Ejecución Principal ---
     if (isAdmin) {
+        console.log("Usuario es admin. Habilitando modo admin.");
         enableAdminMode();
+    } else {
+        console.log("Usuario es visitante.");
     }
     renderPosts();
 });
+
